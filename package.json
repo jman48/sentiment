@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/language": "^2.0.2",
     "@google-cloud/vision": "^0.25.0",
     "azure-cognitiveservices-contentmoderator": "^4.1.1",
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.1",
+    "ramda": "^0.26.1",
     "source-map-support": "^0.5.4"
   },
   "devDependencies": {
