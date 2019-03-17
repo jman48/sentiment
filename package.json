@@ -16,6 +16,7 @@
     "azure-cognitiveservices-contentmoderator": "^4.1.1",
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.1",
+    "debug": "^4.1.1",
     "google-play-scraper": "^6.2.3",
     "ramda": "^0.26.1",
     "source-map-support": "^0.5.4"
