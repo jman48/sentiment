@@ -1,8 +1,10 @@
 import makeKnex from 'knex';
 import makeDebug from 'debug';
 import fs from 'fs';
-
+import { config as loadEnv } from 'dotenv';
 const debug = makeDebug('brainfm:server/db/index');
+
+loadEnv();
 
 export const connect = () => {
   if (process.env.SERVER_ENV === 'production') {
@@ -36,3 +38,7 @@ export const connect = () => {
     pool: { min: 0, max: 100 }
   });
 };
+
+const DB = connect();
+
+export default DB;
