@@ -9,3 +9,6 @@ jspm_packages
 .idea
 *.json
 .env
+*.pem
+dist
+*log
