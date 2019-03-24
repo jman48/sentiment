@@ -35,9 +35,25 @@ async function saveReview({
   });
 }
 
-export async function save(review) {
+async function saveSentiment(sentiment, reviewId) {
+  const {
+    sentences,
+    documentSentiment: { magnitude, score },
+    language
+  } = sentiment[0];
+
+  const sentimentId = await db("sentiment").insert({
+    reviewId,
+    score,
+    magnitude,
+    language
+  });
+}
+
+export async function save(review, sentiment) {
   try {
-    await saveReview(review);
+    const [ reviewId ] = await saveReview(review);
+    await saveSentiment(sentiment, reviewId)
   } catch (error) {
     console.log("Error: ", error);
   }

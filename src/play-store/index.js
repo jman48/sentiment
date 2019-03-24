@@ -18,7 +18,8 @@ function getReviews(appId, page = 0) {
 async function processReview(review) {
   const sentiment = await analyseSentiment(review.text);
   await save(
-    review
+    review,
+    sentiment
   );
   if (shouldNotify(review, sentiment)) notify(review, sentiment);
 }
