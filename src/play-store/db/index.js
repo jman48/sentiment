@@ -48,6 +48,20 @@ async function saveSentiment(sentiment, reviewId) {
     magnitude,
     language
   });
+
+  const sentencesDb = map(
+    ({ text: { content, beginOffset }, sentiment: { score, magnitude } }) => {
+      return {
+        sentimentId,
+        text: stripeEmoji(content),
+        offset: beginOffset,
+        score,
+        magnitude
+      };
+    },
+    sentences
+  );
+  await db("sentence").insert(sentencesDb);
 }
 
 export async function save(review, sentiment) {
