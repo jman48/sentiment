@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run build:dev && node dist/main.js",
+    "dev": "npm run setup && npm run build:dev && node dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate:make": "knex migrate:make --env local",
     "migrate:latest": "knex migrate:latest",
     "build:dev": "npm run clean && webpack --colors --mode development",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "setup": "export GOOGLE_APPLICATION_CREDENTIALS=/Users/johnarmstrong/apps/sentiment/Sentiment-51edef5c5c81.json"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
   "dependencies": {
     "@google-cloud/language": "^2.0.2",
     "@google-cloud/vision": "^0.25.0",
+    "app-store-scraper": "^0.16.0",
     "azure-cognitiveservices-contentmoderator": "^4.1.1",
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.1",
