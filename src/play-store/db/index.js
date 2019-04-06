@@ -2,6 +2,7 @@ import { map, isNil, isEmpty } from "ramda";
 import emojiStrip from 'emoji-strip';
 import db from "../../db";
 import { saveSentiment } from "../../sentiment/db";
+import { PLAY_STORE } from "../../core";
 
 /**
  * Strip any emojis from text
@@ -35,7 +36,8 @@ async function saveReview({
     title: stripEmoji(title),
     text: stripEmoji(text),
     replyDate: replyDateObj,
-    replyText: stripEmoji(replyText)
+    replyText: stripEmoji(replyText),
+    source: PLAY_STORE
   });
 }
 

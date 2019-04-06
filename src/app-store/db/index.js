@@ -1,7 +1,8 @@
+import makeDebug from "debug";
 import db from "../../db";
 import { saveSentiment } from "../../sentiment/db";
 import { stripEmoji } from "../../core";
-import makeDebug from "debug";
+import { APP_STORE } from "../../core";
 
 const debug = makeDebug("sentiment:appstore/db/index.js");
 
@@ -23,7 +24,8 @@ function saveReview({
     url,
     score,
     title: stripEmoji(title),
-    text: stripEmoji(text)
+    text: stripEmoji(text),
+    source: APP_STORE
   })
 }
 
