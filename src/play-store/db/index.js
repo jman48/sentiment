@@ -2,7 +2,10 @@ import { map, isNil, isEmpty } from "ramda";
 import emojiStrip from 'emoji-strip';
 import db from "../../db";
 
-function stripeEmoji(text) {
+/**
+ * Strip any emojis from text
+ */
+function stripEmoji(text) {
   if (isNil(text) || isEmpty(text)) return text;
 
   return emojiStrip(text);
@@ -28,10 +31,10 @@ async function saveReview({
     date: dateObj,
     url,
     score,
-    title: stripeEmoji(title),
-    text: stripeEmoji(text),
+    title: stripEmoji(title),
+    text: stripEmoji(text),
     replyDate: replyDateObj,
-    replyText: stripeEmoji(replyText)
+    replyText: stripEmoji(replyText)
   });
 }
 
@@ -53,7 +56,7 @@ async function saveSentiment(sentiment, reviewId) {
     ({ text: { content, beginOffset }, sentiment: { score, magnitude } }) => {
       return {
         sentimentId,
-        text: stripeEmoji(content),
+        text: stripEmoji(content),
         offset: beginOffset,
         score,
         magnitude
