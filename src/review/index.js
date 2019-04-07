@@ -18,12 +18,14 @@ export async function updateLastReviewId(id, source) {
 }
 
 export async function getNewReviews(reviews, source) {
-  const [{ last_id }] = await db("source_last_id").where({
+  const lastIdObj = await db("source_last_id").where({
     source
   });
 
   // No last_id so must be first run
-  if (isNil(last_id)) return reviews;
+  if (isNil(lastIdObj) || lastIdObj.length < 1) return reviews;
+
+  const [{ last_id }] = lastIdObj;
 
   const [{ date }] = await db("reviews").where({ reviewId: last_id });
 
