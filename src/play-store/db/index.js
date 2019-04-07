@@ -1,20 +1,9 @@
-import { map, isNil, isEmpty } from "ramda";
-import emojiStrip from 'emoji-strip';
 import db from "../../db";
 import { saveSentiment } from "../../sentiment/db";
-import { PLAY_STORE } from "../../core";
+import { PLAY_STORE, stripEmoji } from "../../core";
 import makeDebug from "debug";
 
 const debug = makeDebug("sentiment:playstore/db/index.js");
-
-/**
- * Strip any emojis from text
- */
-function stripEmoji(text) {
-  if (isNil(text) || isEmpty(text)) return text;
-
-  return emojiStrip(text);
-}
 
 async function saveReview({
   id: reviewId,
