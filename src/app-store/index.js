@@ -4,7 +4,7 @@ import { analyseSentiment } from "../sentiment";
 import { save } from "./db";
 import makeDebug from "debug";
 import { APP_STORE } from "../core";
-import { updateLastReviewId } from '../review';
+import { getNewReviews, updateLastReviewId } from "../review";
 
 const debug = makeDebug("sentiment:appstore/index.js");
 
@@ -25,6 +25,11 @@ export async function checkReviews(id) {
   try {
     const reviews = await getReviews(id);
     debug(`Retrieved ${reviews.length} app store reviews`);
+
+    const newReviewsToProcess = await getNewReviews(reviews, APP_STORE);
+    debug(`${newReviewsToProcess.length} new app store reviews to process`);
+
+    if (newReviewsToProcess.length < 1) return;
 
     const processReviews = map(review => processReview(review), reviews);
     await Promise.all(processReviews);

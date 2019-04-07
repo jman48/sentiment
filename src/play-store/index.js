@@ -5,7 +5,7 @@ import { analyseSentiment } from "../sentiment";
 import { shouldNotify, notify } from "../notification";
 import { save } from "./db";
 import { PLAY_STORE } from "../core";
-import { updateLastReviewId } from "../review";
+import { updateLastReviewId, getNewReviews } from "../review";
 
 const debug = makeDebug("sentiment:playstore/index.js");
 
@@ -28,7 +28,12 @@ export async function checkReviews(id) {
     const reviews = await getReviews(id);
     debug(`Retrieved ${reviews.length} play store reviews`);
 
-    const processReviews = map(review => processReview(review), reviews);
+    const newReviewsToProcess = await getNewReviews(reviews, PLAY_STORE);
+    debug(`${newReviewsToProcess.length} new play store reviews to process`);
+
+    if (newReviewsToProcess.length < 1) return;
+
+    const processReviews = map(review => processReview(review), reviewsToProcess);
     await Promise.all(processReviews);
     await updateLastReviewId(reviews[0].id, PLAY_STORE);
   } catch (error) {
