@@ -9,7 +9,7 @@ exports.up = knex => {
     t.integer("userId")
       .unsigned()
       .index()
-      .references("reviews.id");
+      .references("users.id");
     t.text('sourceName');
     t.text('sourceId');
     t.string('sourceType');
