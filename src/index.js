@@ -7,8 +7,8 @@ loadEnv();
 
 async function run() {
   await Promise.all([
-    await checkPlayStoreReviews("com.brainfm.app"),
-    await checkAppStoreReviews("1110684238")
+    checkPlayStoreReviews("com.brainfm.app"),
+    checkAppStoreReviews("1110684238")
   ]);
 }
 
