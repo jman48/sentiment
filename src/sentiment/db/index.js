@@ -10,7 +10,7 @@ export async function saveSentiment(sentiment, reviewId) {
   } = sentiment[0];
 
   const sentimentId = await db("sentiment").insert({
-    reviewId,
+    reviewRowId: reviewId,
     score,
     magnitude,
     language
