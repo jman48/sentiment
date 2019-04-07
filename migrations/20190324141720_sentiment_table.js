@@ -6,7 +6,7 @@ exports.up = knex => {
       .unsigned()
       .primary()
       .notNullable();
-    t.integer("reviewId")
+    t.integer("reviewRowId")
       .unsigned()
       .index()
       .references("reviews.id");
