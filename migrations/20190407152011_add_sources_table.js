@@ -12,6 +12,7 @@ exports.up = knex => {
       .references("reviews.id");
     t.text('sourceName');
     t.text('sourceId');
+    t.string('sourceType');
   });
 };
 
