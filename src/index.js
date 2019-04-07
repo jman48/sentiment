@@ -10,6 +10,7 @@ async function run() {
     checkPlayStoreReviews("com.brainfm.app"),
     checkAppStoreReviews("1110684238")
   ]);
+  process.exit();
 }
 
 (async () => {
