@@ -3,7 +3,8 @@ import makeDebug from "debug";
 import { map } from 'ramda';
 import { analyseSentiment } from "../sentiment";
 import { shouldNotify, notify } from "../notification";
-import { save } from './db';
+import { save } from "./db";
+import { PLAY_STORE, updateLastReviewId } from "../core";
 
 const debug = makeDebug("sentiment:playstore/index.js");
 
@@ -28,10 +29,11 @@ async function processReview(review) {
 export async function checkReviews(id) {
   try {
     const reviews = await getReviews(id);
-    debug(`Retrieved ${reviews.length} reviews`);
+    debug(`Retrieved ${reviews.length} play store reviews`);
 
     const processReviews = map(review => processReview(review), reviews);
     await Promise.all(processReviews);
+    await updateLastReviewId(reviews[0].id, PLAY_STORE);
   } catch (error) {
     debug(error);
   }
