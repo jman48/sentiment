@@ -1,14 +1,14 @@
 import "babel-polyfill";
 import { config as loadEnv } from "dotenv";
-import { checkReviews as checkPlayStoreReviews } from "./play-store";
-import { checkReviews as checkAppStoreReviews } from "./app-store";
+import { processReviews as processPlayStoreReviews } from "./play-store";
+import { processReviews as processAppStoreReviews } from "./app-store";
 
 loadEnv();
 
 async function run() {
   await Promise.all([
-    checkPlayStoreReviews("com.brainfm.app"),
-    checkAppStoreReviews("1110684238")
+    processPlayStoreReviews("com.brainfm.app"),
+    processAppStoreReviews("1110684238")
   ]);
   process.exit();
 }

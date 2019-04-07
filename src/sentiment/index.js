@@ -1,5 +1,4 @@
 import language from '@google-cloud/language';
-import ramda from 'ramda';
 
 const languageClient = new language.LanguageServiceClient();
 

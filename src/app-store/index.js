@@ -21,7 +21,7 @@ async function processReview(review) {
   await save(review, sentiment);
 }
 
-export async function checkReviews(id) {
+export async function processReviews(id) {
   try {
     const reviews = await getReviews(id);
     debug(`Retrieved ${reviews.length} app store reviews`);
@@ -35,6 +35,6 @@ export async function checkReviews(id) {
     await Promise.all(processReviews);
     await updateLastReviewId(reviews[0].id, APP_STORE);
   } catch (error) {
-    debug(error);
+    debug('An error has occurred processing app store reviews: ', error);
   }
 }
