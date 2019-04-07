@@ -3,6 +3,9 @@ import emojiStrip from 'emoji-strip';
 import db from "../../db";
 import { saveSentiment } from "../../sentiment/db";
 import { PLAY_STORE } from "../../core";
+import makeDebug from "debug";
+
+const debug = makeDebug("sentiment:playstore/db/index.js");
 
 /**
  * Strip any emojis from text
@@ -46,6 +49,6 @@ export async function save(review, sentiment) {
     const [ reviewId ] = await saveReview(review);
     await saveSentiment(sentiment, reviewId)
   } catch (error) {
-    console.log("Error: ", error);
+    debug('An error has occurred trying to save a play store review: ', error);
   }
 }
