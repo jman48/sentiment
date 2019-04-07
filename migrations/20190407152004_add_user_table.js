@@ -6,7 +6,8 @@ exports.up = knex => {
       .unsigned()
       .primary()
       .notNullable();
-    t.text('email')
+    t.text('email');
+    t.boolean('enabled').defaultTo(true);
   });
 };
 
