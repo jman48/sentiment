@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run setup && npm run build:dev && node dist/main.js",
+    "dev": "npm run setup && npm run build:dev && DEBUG=sentiment* node dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate:make": "knex migrate:make --env local",
     "migrate:latest": "knex migrate:latest",
