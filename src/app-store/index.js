@@ -3,7 +3,8 @@ import { map } from "ramda";
 import { analyseSentiment } from "../sentiment";
 import { save } from "./db";
 import makeDebug from "debug";
-import { updateLastReviewId, APP_STORE } from "../core";
+import { APP_STORE } from "../core";
+import { updateLastReviewId } from '../review';
 
 const debug = makeDebug("sentiment:appstore/index.js");
 

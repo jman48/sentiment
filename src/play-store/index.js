@@ -1,10 +1,11 @@
 import playStore from "google-play-scraper";
 import makeDebug from "debug";
-import { map } from 'ramda';
+import { map } from "ramda";
 import { analyseSentiment } from "../sentiment";
 import { shouldNotify, notify } from "../notification";
 import { save } from "./db";
-import { PLAY_STORE, updateLastReviewId } from "../core";
+import { PLAY_STORE } from "../core";
+import { updateLastReviewId } from "../review";
 
 const debug = makeDebug("sentiment:playstore/index.js");
 
@@ -18,13 +19,9 @@ function getReviews(appId, page = 0) {
 
 async function processReview(review) {
   const sentiment = await analyseSentiment(review.text);
-  await save(
-    review,
-    sentiment
-  );
+  await save(review, sentiment);
   if (shouldNotify(review, sentiment)) notify(review, sentiment);
 }
-
 
 export async function checkReviews(id) {
   try {
