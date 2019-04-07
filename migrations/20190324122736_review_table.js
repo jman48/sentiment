@@ -6,7 +6,7 @@ exports.up = knex => {
       .unsigned()
       .primary()
       .notNullable();
-    t.string("reviewId"); //Store separate to id as we get reviews from multiple sources, so may conflict if we use it for primary key
+    t.string("reviewId").index('reviewIdIndex'); //Store separate to id as we get reviews from multiple sources, so may conflict if we use it for primary key
     t.string("userName");
     t.date("date");
     t.string("url");
