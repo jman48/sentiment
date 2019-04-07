@@ -26,6 +26,8 @@ export async function processReviews(id) {
     const reviews = await getReviews(id);
     debug(`Retrieved ${reviews.length} app store reviews`);
 
+    if (reviews.length < 1) return;
+
     const newReviewsToProcess = await getNewReviews(reviews, APP_STORE);
     debug(`${newReviewsToProcess.length} new app store reviews to process`);
 

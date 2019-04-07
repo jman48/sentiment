@@ -26,6 +26,8 @@ export async function processReviews(id) {
     const reviews = await getReviews(id);
     debug(`Retrieved ${reviews.length} play store reviews`);
 
+    if (reviews.length < 0) return;
+
     const newReviewsToProcess = await getNewReviews(reviews, PLAY_STORE);
     debug(`${newReviewsToProcess.length} new play store reviews to process`);
 
