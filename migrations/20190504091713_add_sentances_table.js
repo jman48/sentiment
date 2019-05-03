@@ -1,4 +1,4 @@
-const table = "sentiment";
+const table = "sentence";
 
 exports.up = knex => {
   return knex.schema.createTable(table, t => {
@@ -6,12 +6,14 @@ exports.up = knex => {
       .unsigned()
       .primary()
       .notNullable();
-    t.integer("reviewRowId")
+    t.integer("sentimentId")
       .unsigned()
       .index()
-      .references("reviews.id");
-    t.float("score");
-    t.float("magnitude");
+      .references("sentiment.id");
+    t.text("text");
+    t.decimal("score", 18, 17);
+    t.integer("magnitude");
+    t.integer("offset");
     t.string("language");
   });
 };
