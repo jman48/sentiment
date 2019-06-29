@@ -9,7 +9,7 @@ Analyse each entity (think keywords) in the reviews and determine the sentiment 
 
 
 ### Entity affect on reviews
-Find the affect each entity has on your reviews. An example for a music mindfulness streaming app is:
+Find the affect each entity has on your reviews. An example for a music mindfulness streaming app is (using real reviews):
 ![Entity app review analysis example](https://raw.githubusercontent.com/jman48/sentiment/master/example/entity_review_analysis.png?token=ABIUUK3BGZPHNEXCOMCMCHC5EEVWG "Entity app review analysis example")
 
 From this we can see that:
