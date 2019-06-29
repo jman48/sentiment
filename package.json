@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run setup && npm run build:dev && DEBUG=sentiment* node dist/main.js",
+    "dev": "npm run build:dev && DEBUG=sentiment* node dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate:make": "knex migrate:make --env local",
     "migrate:latest": "knex migrate:latest",
-    "build:dev": "npm run clean && webpack --colors --mode development",
-    "build": "npm run clean && webpack --colors --mode production",
+    "build:dev": "npm run setup && npm run clean && webpack --colors --mode development",
+    "build": "npm run setup && npm run clean && webpack --colors --mode production",
     "clean": "rm -rf dist",
     "setup": "export GOOGLE_APPLICATION_CREDENTIALS=/Users/johnarmstrong/apps/sentiment/Sentiment-51edef5c5c81.json"
   },
