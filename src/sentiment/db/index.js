@@ -31,7 +31,7 @@ export async function saveSentiment(sentiment, reviewId) {
   await db("sentence").insert(sentencesDb);
 }
 
-export async function saveEntitySentiment(entitySentiment) {
+export async function saveEntitySentiment(entitySentiment, reviewId) {
   const {
     name,
     type,
@@ -40,7 +40,8 @@ export async function saveEntitySentiment(entitySentiment) {
   } = entitySentiment;
 
   const entityId = await db("entity").insert({
-    name,
+    reviewRowId: reviewId,
+    name: stripEmoji(name),
     type,
     salience,
     score,
@@ -55,7 +56,7 @@ export async function saveEntitySentiment(entitySentiment) {
     }) => {
       return db("mention").insert({
         entityId,
-        text: content,
+        text: stripEmoji(content),
         offset: beginOffset,
         score,
         magnitude,
@@ -69,11 +70,13 @@ export async function saveEntitySentiment(entitySentiment) {
       entityId,
       key,
       value
-    })
+    });
   });
 
-  await Promise.all([
-    mentionsInserts,
-    metadataInserts
-  ])
+  await Promise.all([mentionsInserts, metadataInserts]);
+}
+
+export async function saveEntitySentiments(entitySentiments, reviewId) {
+  const entitySentimentInserts = map(entitySentiment => saveEntitySentiment(entitySentiment, reviewId), entitySentiments);
+  await Promise.all(entitySentimentInserts);
 }
