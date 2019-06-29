@@ -3,7 +3,7 @@ import { map } from "ramda";
 import { analyseSentiment } from "../sentiment";
 import { save } from "./db";
 import makeDebug from "debug";
-import { APP_STORE } from "../core";
+import { APP_STORE, filterErrors } from "../core";
 import { getNewReviews, updateLastReviewId } from "../review";
 
 const debug = makeDebug("sentiment:appstore/index.js");
@@ -33,10 +33,17 @@ export async function processReviews(id) {
 
     if (newReviewsToProcess.length < 1) return;
 
-    const processReviews = map(review => processReview(review), reviews);
-    await Promise.all(processReviews);
+    const processReviews = map(
+      review => processReview(review),
+      newReviewsToProcess
+    );
+
+    // Filter out any translation errors
+    await Promise.all(
+      processReviews.map(promise => promise.catch(error => filterErrors(error)))
+    );
     await updateLastReviewId(reviews[0].id, APP_STORE);
   } catch (error) {
-    debug('An error has occurred processing app store reviews: ', error);
+    debug("An error has occurred processing app store reviews: ", error);
   }
 }

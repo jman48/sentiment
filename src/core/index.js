@@ -11,5 +11,17 @@ export function stripEmoji(text) {
   return emojiStrip(text);
 }
 
+const isTranslationError = error => error.code === 3;
+
+// Return only errors we care about
+export const filterErrors = error => {
+  if (isTranslationError(error)) {
+    debug("Ignoring a translation error...");
+    return;
+  }
+
+  return error;
+};
+
 export const APP_STORE = "APP_STORE";
 export const PLAY_STORE = "PLAY_STORE";
