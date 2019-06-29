@@ -1,6 +1,6 @@
 import store from "app-store-scraper";
 import { map } from "ramda";
-import { analyseSentiment } from "../sentiment";
+import { analyseEntitySentiment, analyseSentiment } from "../sentiment";
 import { save } from "./db";
 import makeDebug from "debug";
 import { APP_STORE, filterErrors } from "../core";
@@ -8,25 +8,26 @@ import { getNewReviews, updateLastReviewId } from "../review";
 
 const debug = makeDebug("sentiment:appstore/index.js");
 
-function getReviews(id) {
+function getReviews(id, page = 0) {
   return store.reviews({
     id,
     sort: store.sort.NEWEST,
-    page: 1
+    page
   });
 }
 
-async function processReview(review) {
+async function processReview(review, sourceId) {
   const sentiment = await analyseSentiment(review.text);
-  await save(review, sentiment);
+  const entitySentiment = await analyseEntitySentiment(review.text);
+  await save(review, sentiment, entitySentiment, sourceId);
 }
 
-export async function processReviews(id) {
+export async function processReviews(sourceId, source) {
   try {
-    const reviews = await getReviews(id);
+    const reviews = await getReviews(source);
     debug(`Retrieved ${reviews.length} app store reviews`);
 
-    if (reviews.length < 1) return;
+    if (reviews.length < 1) return debug('No reviews to process from source: ', sourceId);
 
     const newReviewsToProcess = await getNewReviews(reviews, APP_STORE);
     debug(`${newReviewsToProcess.length} new app store reviews to process`);

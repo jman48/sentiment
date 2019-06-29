@@ -1,6 +1,6 @@
 import makeDebug from "debug";
 import db from "../../db";
-import { saveSentiment } from "../../sentiment/db";
+import { saveSentiment, saveEntitySentiments } from "../../sentiment/db";
 import { stripEmoji } from "../../core";
 import { APP_STORE } from "../../core";
 
@@ -29,10 +29,11 @@ function saveReview({
   })
 }
 
-export async function save(review, sentiment) {
+export async function save(review, sentiment, entitySentiment, sourceId) {
   try {
-    const [ reviewId ] = await saveReview(review);
-    await saveSentiment(sentiment, reviewId)
+    const [ reviewId ] = await saveReview({ ...review, sourceId});
+    await saveSentiment(sentiment, reviewId);
+    await saveEntitySentiments(entitySentiment[0].entities, reviewId);
   } catch (error) {
     debug('Error trying to save app store review and sentiment: ', error);
   }
