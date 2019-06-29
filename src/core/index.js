@@ -1,6 +1,8 @@
 import emojiStrip from "emoji-strip";
 import { isEmpty, isNil } from "ramda";
-import db from "../db";
+import makeDebug from "debug";
+
+const debug = makeDebug("sentiment:core/index.js");
 
 /**
  * Strip any emojis from text
