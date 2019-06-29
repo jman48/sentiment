@@ -13,6 +13,7 @@ exports.up = knex => {
       .references("sources.id");
     t.string("userName");
     t.date("date");
+    t.specificType("score", "tinyint");
     t.text("url");
     t.text("title");
     t.text("text");
