@@ -3,7 +3,7 @@ import { map } from 'ramda';
 import db from "../db";
 import { processSources } from "../sources";
 
-const debug = makeDebug("sentiment:source/index.js");
+const debug = makeDebug("sentiment:users/index.js");
 
 export async function processUsers() {
   try {
