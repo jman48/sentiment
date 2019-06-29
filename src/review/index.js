@@ -27,13 +27,16 @@ export async function getNewReviews(reviews, source) {
 
   const [{ last_id }] = lastIdObj;
 
-  const [{ date }] = await db("reviews").where({ reviewId: last_id });
+  const [ row ] = await db("reviews").where({ reviewId: last_id });
 
   const lastReviewIndex = findIndex(review => {
     return review.id === last_id;
   }, reviews);
 
-  const lastReviewDate = new Date(date);
+  // No stored last review, must be first run
+  if (isNil(row) || isNil(row.date)) return reviews;
+
+  const lastReviewDate = new Date(row.date);
   const latestReviewDate = new Date(reviews[0].date);
 
   // Last review not found and these reviews are newer, so return all
