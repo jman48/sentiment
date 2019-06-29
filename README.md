@@ -37,7 +37,7 @@ Once you have a bit of data saved you will want to query it. Below are a few SQL
 select *, `Entity rating avg` - (select AVG(score) from sentiment.reviews) as 'Difference'
 from (select entity.name    as 'Keyword', 
              ROUND(AVG(entity.score), 2) as 'Sentiment', #How good/ bad the user feels
-             AVG(magnitude) as 'Emotion',                                             #How strongly the user feels
+             AVG(magnitude) as 'Emotion',  #How strongly the user feels
              count(*)       as 'Total', AVG(r.score) as 'Entity rating avg'
       from sentiment.entity
              left join sentiment.reviews r on entity.reviewRowId = r.id
