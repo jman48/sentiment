@@ -1,3 +1,6 @@
+/**
+ * A source is an place to get reviews from. Currently this is either the App store or Google play store
+ */
 import { isNil, map } from "ramda";
 import makeDebug from "debug";
 import { APP_STORE, PLAY_STORE } from "../core";
@@ -7,12 +10,12 @@ import { processReviews as processPlayStoreReviews } from "../play-store";
 
 const debug = makeDebug("sentiment:source/index.js");
 
-function processSource({ sourceId, sourceType }) {
+function processSource({ id, sourceId, sourceType }) {
   switch (sourceType) {
     case APP_STORE:
-      return processAppStoreReviews(sourceId);
+      return processAppStoreReviews(id, sourceId);
     case PLAY_STORE:
-      return processPlayStoreReviews(sourceId);
+      return processPlayStoreReviews(id, sourceId);
   }
 }
 
